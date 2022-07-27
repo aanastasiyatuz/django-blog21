@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import PostSerializer
-from .models import Post
+from .serializers import CommentSerializer, PostSerializer
+from .models import Comment, Post
 
 @api_view(['GET'])
 def posts_list(request):
@@ -37,3 +37,25 @@ def post_update(request, p_id):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response("Пост успешно обновлен")
+
+
+@api_view(["POST"])
+def create_comment(request):
+    serializer = CommentSerializer(data=request.POST)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response("Комментарий успешно создан")
+
+@api_view(["DELETE"])
+def comment_delete(request, c_id):
+    comment = get_object_or_404(Comment, id=c_id)
+    comment.delete()
+    return Response("Комментарий успешно удален")
+
+@api_view(["PUT", "PATCH"])
+def comment_update(request, c_id):
+    comment = get_object_or_404(Comment, id=c_id)
+    serializer = CommentSerializer(instance=comment, data=request.POST)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response("Комментарий успешно обновлен")
