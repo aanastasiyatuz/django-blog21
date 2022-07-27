@@ -8,6 +8,9 @@ from .models import Comment, Post
 @api_view(['GET'])
 def posts_list(request):
     queryset = Post.objects.all()
+    q = request.query_params
+    if q.get("title"):
+        queryset = queryset.filter(title__icontains=q.get("title"))
     serializer = PostSerializer(instance=queryset, many=True)
     return Response(serializer.data)
 
