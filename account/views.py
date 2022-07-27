@@ -12,7 +12,3 @@ def register(request):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response("Вы успешно зарегистрировались")
-
-@api_view(["POST"])
-def login(request):
-    ...

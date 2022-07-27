@@ -18,6 +18,7 @@ from django.urls import path
 
 from blog.views import posts_list, create_post, post_detail, post_delete, post_update, create_comment, comment_update, comment_delete
 from account.views import register
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +34,6 @@ urlpatterns = [
     path('comment_update/<int:c_id>/', comment_update),
 
     path('register/', register),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
