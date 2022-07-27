@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from blog.views import posts_list, create_post, post_detail, post_delete, post_update, create_comment, comment_update, comment_delete
+from account.views import register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,6 @@ urlpatterns = [
     path('comment_create/', create_comment),
     path('comment_delete/<int:c_id>/', comment_delete),
     path('comment_update/<int:c_id>/', comment_update),
+
+    path('register/', register),
 ]
