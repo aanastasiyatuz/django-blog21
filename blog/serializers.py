@@ -17,10 +17,11 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        exclude = ['post']
+        fields = '__all__'
     
     def to_representation(self, instance):
         dict_ = super().to_representation(instance)
+        del dict_["post"]
         dict_["user"] = instance.user.username
         return dict_
 
